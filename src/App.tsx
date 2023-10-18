@@ -120,7 +120,7 @@ const App: React.FC = () => {
       <Navbar />
       <div className="container mx-auto m-10 ">
         <div className="flex ml-10 mt-10 justify-between flex-wrap">
-          <div className="form-control ">
+          <div className="form-control w-full sm:w-1/5">
             <label className="label">
               <span className="label-text font-bold">Nombre</span>
             </label>
@@ -134,7 +134,7 @@ const App: React.FC = () => {
               }
             />
           </div>
-          <div className="form-control ">
+          <div className="form-control w-full sm:w-1/5 ">
             <label className="label">
               <span className="label-text font-bold">Apellido</span>
             </label>
@@ -149,7 +149,7 @@ const App: React.FC = () => {
             />
           </div>
 
-          <div className="form-control ">
+          <div className="form-control w-full sm:w-1/5">
             <label className="label">
               <span className="label-text font-bold">Cargo</span>
             </label>
@@ -164,7 +164,7 @@ const App: React.FC = () => {
             />
           </div>
 
-          <div className="form-control ">
+          <div className="form-control w-full sm:w-1/5">
             <label className="label">
               <span className="label-text font-bold">Cédula</span>
             </label>
@@ -179,7 +179,7 @@ const App: React.FC = () => {
             />
           </div>
 
-          <div className="form-control ">
+          <div className="form-control w-full sm:w-1/5">
             <label className="label">
               <span className="label-text font-bold">Edad</span>
             </label>
@@ -198,8 +198,8 @@ const App: React.FC = () => {
             />
           </div>
         </div>
-        <div className="flex ml-10 pt-2  mt-2">
-          <div className="form-control flex-auto ">
+        <div className="flex  flex-wrap ml-10 pt-2  mt-2 ">
+          <div className="form-control w-full sm:w-3/4 ">
             <label className="label">
               <span className="label-text font-bold">
                 Descripcion del cargo e historial
@@ -214,7 +214,7 @@ const App: React.FC = () => {
               }
             ></textarea>
           </div>
-          <div className="flex">
+          <div>
             {editing ? (
               <button
                 onClick={updateEmployee}
@@ -238,21 +238,20 @@ const App: React.FC = () => {
             </button>
           </div>
         </div>
+        <div className="flex  pt-2  mt-10">
+          <div className="form-control flex-auto">
+            <input
+              type="text"
+              placeholder="Buscar por, nombre, apellido, cedula "
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="input input-bordered input-primary w-2/4"
+            />
+          </div>
+        </div>
         {
           filteredEmployees.length > 0 ? (
             <>
-              <div className="flex  pt-2  mt-10">
-                <div className="form-control flex-auto">
-                  <input
-                    type="text"
-                    placeholder="Buscar por, nombre, apellido, cedula "
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="input input-bordered input-primary w-2/4"
-                  />
-                </div>
-              </div>
-
               <div className="flex mt-2 overflow-x-auto">
                 <table className="table xs:table-xs md:table-md">
                   <thead>
