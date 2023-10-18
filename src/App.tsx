@@ -81,13 +81,18 @@ const App: React.FC = () => {
     setEmployees(updatedEmployees);
   };
 
-  const filteredEmployees = employees.filter(
-    (employee) =>
-      employee.name.toLowerCase().includes(search.toLowerCase()) ||
-      employee.last_name.toLowerCase().includes(search.toLowerCase()) ||
-      employee.position.toLowerCase().includes(search.toLowerCase()) ||
-      employee.dni.includes(search)
-  );
+  const filteredEmployees = employees
+    .filter((employee) => employee !== null)
+    .filter(
+      (employee) =>
+        (employee.name &&
+          employee.name.toLowerCase().includes(search.toLowerCase())) ||
+        (employee.last_name &&
+          employee.last_name.toLowerCase().includes(search.toLowerCase())) ||
+        (employee.position &&
+          employee.position.toLowerCase().includes(search.toLowerCase())) ||
+        (employee.dni && employee.dni.includes(search))
+    );
 
   const openModal = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -213,7 +218,7 @@ const App: React.FC = () => {
             {editing ? (
               <button
                 onClick={updateEmployee}
-                className="btn p-2 bg-blue-500 text-white m-20"
+                className="btn p-4 bg-primary text-white mt-20 ml-10 rounded-full"
               >
                 Guardar
               </button>
@@ -233,74 +238,79 @@ const App: React.FC = () => {
             </button>
           </div>
         </div>
-        <div className="flex  pt-2  mt-10 ">
-          <div className="form-control flex-auto ">
-            <input
-              type="text"
-              placeholder="Buscar por, nombre, apellido, cedula "
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="input input-bordered input-primary w-2/4"
-            />
-          </div>
-        </div>
+        {
+          filteredEmployees.length > 0 ? (
+            <>
+              <div className="flex  pt-2  mt-10">
+                <div className="form-control flex-auto">
+                  <input
+                    type="text"
+                    placeholder="Buscar por, nombre, apellido, cedula "
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="input input-bordered input-primary w-2/4"
+                  />
+                </div>
+              </div>
 
-        <div className="flex mt-2 overflow-x-auto">
-          <table className="table xs:table-xs md:table-md">
-            <thead>
-              <tr>
-                <th>Edad / Nombre / Apellido</th>
-                <th>Cédula</th>
-                <th>Cargo</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredEmployees.map((employee, index) => (
-                <tr key={index}>
-                  <td>
-                    <div className="flex items-center space-x-3">
-                      <div className="avatar placeholder">
-                        <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
-                          <span> {employee.age}</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">
-                          {employee.name} {employee.last_name}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{employee.dni}</td>
-                  <td> {employee.position}</td>
-                  <th>
-                    {/* <a className="btn">open modal</a> */}
-                    <a
-                      className="btn btn-ghost btn-xs "
-                      href="#my_modal_8"
-                      onClick={() => openModal(employee)}
-                    >
-                      details
-                    </a>
-                    <button
-                      onClick={() => editEmployee(index)}
-                      className="p-1 text-blue-500 mr-2"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      onClick={() => deleteEmployee(index)}
-                      className="p-1 text-red-500"
-                    >
-                      <FaTrash />
-                    </button>
-                  </th>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              <div className="flex mt-2 overflow-x-auto">
+                <table className="table xs:table-xs md:table-md">
+                  <thead>
+                    <tr>
+                      <th>Edad / Nombre / Apellido</th>
+                      <th>Cédula</th>
+                      <th>Cargo</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredEmployees.map((employee, index) => (
+                      <tr key={index}>
+                        <td>
+                          <div className="flex items-center space-x-3">
+                            <div className="avatar placeholder">
+                              <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
+                                <span> {employee.age}</span>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="font-bold">
+                                {employee.name} {employee.last_name}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>{employee.dni}</td>
+                        <td> {employee.position}</td>
+                        <th>
+                          <a
+                            className="btn btn-ghost btn-xs "
+                            href="#my_modal_8"
+                            onClick={() => openModal(employee)}
+                          >
+                            details
+                          </a>
+                          <button
+                            onClick={() => editEmployee(index)}
+                            className="p-1 text-blue-500 mr-2"
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            onClick={() => deleteEmployee(index)}
+                            className="p-1 text-red-500"
+                          >
+                            <FaTrash />
+                          </button>
+                        </th>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          ) : null // Otra opción es simplemente dejarlo como null si no hay datos.
+        }
       </div>
 
       <div className="modal " id="my_modal_8">
