@@ -27,7 +27,7 @@ const App: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>(() => {
     const storedEmployees = window.localStorage.getItem("employees");
     if (storedEmployees) return JSON.parse(storedEmployees);
-    return Array(9).fill(null);
+    return [];
   });
 
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
